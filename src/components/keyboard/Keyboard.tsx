@@ -7,7 +7,7 @@ interface IKBObject {
 
 const kb: IKBObject = {
     a: ["a", "ا"],
-    b: ["b","ب"],
+    b: ["b", "ب"],
     d: ["d", "د"],
     e: ["e", "ى"],
     f: ["f", "ف"],
@@ -43,26 +43,34 @@ const kb: IKBObject = {
 
 interface IKeyboardProps {
     type: 0 | 1 | 2
-    right: string[]
-    included: string[]
-    except: string[]
+    right: Set<string>
+    included: Set<string>
+    except: Set<string>
     add: (key: string) => void
     backspace: () => void
+    submit: () => void
+    hidden: boolean
 }
 
-const Keyboard: FC<IKeyboardProps> = ({ type, right, included, except, add, backspace }) => {
+const Keyboard: FC<IKeyboardProps> = ({ type, right, included, except, add, backspace, submit, hidden }) => {
     return (
-        <ul className="cordle-kb-ul">
-            {
-                Object.keys(kb).map((key) => [key, kb[key][type]]).map(key =>
-                <li key={key[0]} className={except.includes(key[0]) ? "cordle-kb-except" : right.includes(key[0]) ? "cordle-kb-right" : included.includes(key[0]) ? "cordle-kb-included" : right.includes(key[0]) ? "cordle-kb-right" : "cordle-kb-normal"}>
-                    <button type="button" disabled={except.includes(key[0])} onClick={() => add(key[0])}>{key[1]}</button>
-                </li>)
-            }
-            <li className="cordle-kb-backspace">
-                <button type="button" onClick={() => backspace()}>{'<-'}</button>
-            </li>
-        </ul>
+        <div className="overflow-hidden fixed bottom-0 w-full flex flex-row justify-center items-center"
+            style={hidden ? { display: "none" } : {}}>
+            <ul className="cordle-kb-ul">
+                {
+                    Object.keys(kb).map((key) => [key, kb[key][type]]).map(key =>
+                        <li key={key[0]} className={except.has(key[0]) ? "cordle-kb-except" : right.has(key[0]) ? "cordle-kb-right" : included.has(key[0]) ? "cordle-kb-included" : right.has(key[0]) ? "cordle-kb-right" : "cordle-kb-normal"}>
+                            <button type="button" disabled={except.has(key[0])} onClick={() => add(key[0])}>{key[1]}</button>
+                        </li>)
+                }
+                <li className="cordle-kb-backspace">
+                    <button type="button" onClick={() => backspace()}>←</button>
+                </li>
+                <li className="cordle-kb-submit">
+                    <button type="button" onClick={() => submit()}>提交</button>
+                </li>
+            </ul>
+        </div>
     )
 }
 

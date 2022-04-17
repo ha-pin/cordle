@@ -1,0 +1,24 @@
+.cordle-cb {
+    @apply select-none w-md <md:(w-full) flex flex-row justify-center items-center px-5;
+
+    & > li {
+        @apply shadow shadow-gray-400;
+        @apply w-13 h-13 m-1 rounded flex justify-center items-center;
+    }
+
+    .cordle-cb-except {
+        @apply bg-[#5d6673] text-white;
+    }
+
+    .cordle-cb-right {
+        @apply bg-[#1d9c9c] text-white;
+    }
+
+    .cordle-cb-included {
+        @apply bg-[#de7525] text-white;
+    }
+
+    .cordle-cb-pending {
+        @apply bg-[#f7f8f9] text-black;
+    }
+}
