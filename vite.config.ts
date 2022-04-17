@@ -11,5 +11,6 @@ export default defineConfig({
             presetWind()
         ],
         transformers: [transformerDirective()]
-    })]
+    })],
+    base: "/cordle"
 })
