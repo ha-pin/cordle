@@ -12,5 +12,5 @@ export default defineConfig({
         ],
         transformers: [transformerDirective()]
     })],
-    base: "/cordle"
+    base: "/cordle/"
 })
