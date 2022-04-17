@@ -1,0 +1,28 @@
+.cordle-kb-ul {
+    @apply shadow shadow-dark-200;
+    @apply bg-[#f5f3f2] select-none fixed px-5 py-7 bottom-0 w-full grid grid-cols-6 gap-3 list-none;
+
+    & > li {
+        @apply shadow shadow-md shadow-gray-200;
+        @apply px-4 font-bold text-lg py-2 w-full rounded flex flex-col justify-center items-center;
+    }
+
+    .cordle-kb-normal {
+        @apply bg-[#f7f8f9];
+    }
+
+    .cordle-kb-except {
+        @apply bg-[#5d6673] text-white;
+    }
+
+    .cordle-kb-right {
+        @apply bg-[#1d9c9c] text-white;
+    }
+
+    .cordle-kb-included {
+        @apply bg-[#de7525] text-white;
+    }
+    .cordle-kb-backspace {
+        @apply bg-[#f7f8f9] col-span-3;
+    }
+}
