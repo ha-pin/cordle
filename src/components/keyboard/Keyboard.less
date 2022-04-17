@@ -4,7 +4,11 @@
 
     & > li {
         @apply shadow shadow-md shadow-gray-200;
-        @apply px-4 font-bold text-lg py-2 w-full rounded flex flex-col justify-center items-center;
+        @apply font-bold text-lg w-full rounded flex flex-col justify-center items-center;
+
+        & > button {
+            @apply w-full px-4 py-2;
+        }
     }
 
     .cordle-kb-normal {
