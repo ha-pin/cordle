@@ -46,20 +46,28 @@ const App = () => {
     }
 
     const check = () => {
+        let r: string[] = []
+        let i: string[] = []
+        let e: string[] = []
+
         const back = [...current].map((c, idx) => {
             if (c[0] === ans.charAt(idx)) {
-                setRight(new Set([...right, c[0]]))
+                r.push(c[0])
                 return [c[0], 1]
             }
 
             if (Array.from(ans).includes(c[0])) {
-                setIncluded(new Set([...included, c[0]]))
+                i.push(c[0])
                 return [c[0], 2]
             }
 
-            setExcept(new Set([...except, c[0]]))
+            e.push(c[0])
             return [c[0], 0]
         }) as [string, number][]
+
+        setRight(new Set([...right, ...r]))
+        setIncluded(new Set([...included, ...i]))
+        setExcept(new Set([...except, ...e]))
 
         if (back.every((c) => c[1] === 1)) {
             setGot(true)
