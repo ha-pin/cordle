@@ -4,24 +4,39 @@ import CharBox from './components/CharBox/CharBox'
 import Introduce from './components/Introduce/Introduce'
 
 import Keyboard from './components/keyboard/Keyboard'
+import Share from './components/Share/Share'
+import { getAns, getCurr, getGOT, getIDX, getKeep, setAns, setCurr, setGOT, setIDX, setKeep } from './components/utils/localStorage'
 
 const App = () => {
-    const [type, setType] = useState<0 | 1 | 2>(1)
-    const [included, setIncluded] = useState<Set<string>>(new Set())
-    const [right, setRight] = useState<Set<string>>(new Set())
-    const [except, setExcept] = useState<Set<string>>(new Set())
+    const [type, setType] = useState<0 | 1 | 2>(0)
+    const [included, setIncluded] = useState<Set<string>>(getKeep()[2])
+    const [right, setRight] = useState<Set<string>>(getKeep()[1])
+    const [except, setExcept] = useState<Set<string>>(getKeep()[0])
 
-    const [answers, setAnswers] = useState<Array<Array<[string, string, number]>>>([])
-    const [current, setCurrent] = useState<Array<[string, string, number]>>([])
-    const [idx, setIdx] = useState<number>(0)
+    const [answers, setAnswers] = useState<Array<Array<[string, string, number]>>>(getAns())
+    const [current, setCurrent] = useState<Array<[string, string, number]>>(getCurr())
+    const [idx, setIdx] = useState<number>(getIDX())
+    // TODO
     const [attempt, setAttempt] = useState<number>(0)
-    const [got, setGot] = useState<boolean>(false)
+    const [got, setGot] = useState<boolean>(getGOT())
 
     const ans = "jaqse"
 
     useEffect(() => {
         // 根据答案生成初始化的值
-        setCurrent(Array(ans.length).fill(["", "", -1]))
+        if (
+            getCurr() === null
+        ) {
+            setCurrent(Array(ans.length).fill(["", "", -1]))
+        }
+
+        return () => {
+            // TODO 持久化数据的时机错误！退出的时候保存现有内容
+            setAns(answers)
+            setCurr(current)
+            setIDX(idx)
+            setKeep(except, right, included)
+        }
     }, [])
 
     const backspace = () => {
@@ -72,6 +87,7 @@ const App = () => {
 
         if (back.every((c) => c[2] === 1)) {
             setGot(true)
+            setGOT()
         }
 
         return back
@@ -94,9 +110,7 @@ const App = () => {
                 {!got && current.length !== 0 && <CharBox chars={current} type={type} />}
             </div>
             {
-                got && <div>
-                    <p>恭喜你猜对了今日份的词汇！</p>
-                </div>
+                got && <Share ans={answers} />
             }
             <Keyboard type={type} included={included} right={right} except={except} add={add} backspace={backspace} submit={submit} hidden={got} />
         </div>

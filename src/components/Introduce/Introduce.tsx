@@ -1,5 +1,6 @@
-import { FC, useState } from "react"
+import { FC, useEffect, useState } from "react"
 import CharBox from "../CharBox/CharBox"
+import { getNew, setNew } from "../utils/localStorage"
 import "./Introduce.less"
 
 const example1 = [["j", ["j", "ج", ""], 1], ["a", ["a", "ا", ""], 1], ["q", ["q", "ق", ""], 1], ["e", ["e", "ى", ""], 2], ["s", ["s", "س", ""], 2]] as [string, [string, string, string], number][]
@@ -17,6 +18,12 @@ const Introduce: FC<IIntroduceProps> = ({ type, setType }) => {
     const e1 = example1.map(([k, c, s]) => [k, c[type], s]) as [string, string, number][]
     const e2 = example2.map(([k, c, s]) => [k, c[type], s]) as [string, string, number][]
     const e3 = example3.map(([k, c, s]) => [k, c[type], s]) as [string, string, number][]
+
+    useEffect(() => {
+        if(getNew() !== null){
+            document.getElementById("cordle-intro")?.classList.add("cordle-intro-hidden")
+        }
+    }, [])
 
     const closeIntro = () => {
         document.getElementById("cordle-intro")?.classList.add("cordle-intro-hidden")
@@ -51,7 +58,10 @@ const Introduce: FC<IIntroduceProps> = ({ type, setType }) => {
             <p className="cordle-intro-text">卡片全部为<span className="text-[#1d9c9c]">绿色</span>则恭喜你猜对了！</p>
         </div>
         {/* 开始游戏 */}
-        <button onClick={() => closeIntro()} className="bg-[#1d9c9c] text-white px-4 py-2 rounded m-5">开始游戏</button>
+        <button onClick={() => {
+            setNew()
+            closeIntro()
+        }} className="bg-[#1d9c9c] text-white px-4 py-2 rounded m-5">开始游戏</button>
 
         <div className="flex flex-row shadow shadow-gray-300">
             <button onClick={() => setType(0)} className={`rounded-lg px-2 py-1 ${type === 0 ? "bg-[#1d9c9c] text-white" : "bg-white"}`}>哈拼</button>
