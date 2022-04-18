@@ -59,7 +59,7 @@ const Keyboard: FC<IKeyboardProps> = ({ type, right, included, except, add, back
             <ul className="cordle-kb-ul">
                 {
                     Object.keys(kb).map((key) => [key, kb[key][type]]).map(([k, c]) =>
-                        <li key={k} className={except.has(k) ? "cordle-kb-except" : right.has(k) ? "cordle-kb-right" : included.has(k) ? "cordle-kb-included" : right.has(k) ? "cordle-kb-right" : "cordle-kb-normal"}>
+                        <li key={k} className={except.has(k) ? "cordle-kb-except" : included.has(k) ? "cordle-kb-included" : right.has(k) ? "cordle-kb-right" : "cordle-kb-normal"}>
                             <button type="button" disabled={except.has(k)} onClick={() => add(k, c)}>{c}</button>
                         </li>)
                 }

@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react'
 import './App.less'
+
 import CharBox from './components/CharBox/CharBox'
 import Introduce from './components/Introduce/Introduce'
-
 import Keyboard from './components/keyboard/Keyboard'
 import Share from './components/Share/Share'
-import { getAns, getCurr, getGOT, getIDX, getKeep, setAns, setCurr, setGOT, setIDX, setKeep } from './components/utils/localStorage'
+
+import { getAns, getCurr, getGOT, getIDX, getKeep, preDetectClear, setAns, setCurr, setGOT, setIDX, setKeep } from './components/utils/localStorage'
 
 const App = () => {
+    preDetectClear()
+
     const [type, setType] = useState<0 | 1 | 2>(0)
     const [included, setIncluded] = useState<Set<string>>(getKeep()[2])
     const [right, setRight] = useState<Set<string>>(getKeep()[1])
@@ -20,22 +23,16 @@ const App = () => {
     const [attempt, setAttempt] = useState<number>(0)
     const [got, setGot] = useState<boolean>(getGOT())
 
+    // TODO 网络请求
     const ans = "jaqse"
 
     useEffect(() => {
         // 根据答案生成初始化的值
         if (
-            getCurr() === null
+            getCurr().length === 0
         ) {
             setCurrent(Array(ans.length).fill(["", "", -1]))
-        }
-
-        return () => {
-            // TODO 持久化数据的时机错误！退出的时候保存现有内容
-            setAns(answers)
-            setCurr(current)
-            setIDX(idx)
-            setKeep(except, right, included)
+            setCurr(Array(ans.length).fill(["", "", -1]))
         }
     }, [])
 
@@ -44,7 +41,9 @@ const App = () => {
             let tmp = [...current]
             tmp.splice(idx - 1, 1, ["", "", -1])
             setIdx(idx - 1)
+            setIDX(idx - 1)
             setCurrent(tmp)
+            setCurr(tmp)
         }
     }
 
@@ -57,7 +56,9 @@ const App = () => {
             let tmp = [...current]
             tmp.splice(idx, 1, [k, c, -1])
             setIdx(idx + 1)
+            setIDX(idx + 1)
             setCurrent(tmp)
+            setCurr(tmp)
         }
     }
 
@@ -84,6 +85,7 @@ const App = () => {
         setRight(new Set([...right, ...r]))
         setIncluded(new Set([...included, ...i]))
         setExcept(new Set([...except, ...e]))
+        setKeep(new Set([...except, ...e]), new Set([...included, ...i]), new Set([...right, ...r]))
 
         if (back.every((c) => c[2] === 1)) {
             setGot(true)
@@ -97,8 +99,11 @@ const App = () => {
     const submit = () => {
         if (idx === ans.length && current.every(x => x[0] !== "")) {
             setAnswers([...answers, check()])
+            setAns([...answers, check()])
             setCurrent(Array(ans.length).fill(["", "", -1]))
+            setCurr(Array(ans.length).fill(["", "", -1]))
             setIdx(0)
+            setIDX(0)
         }
     }
 

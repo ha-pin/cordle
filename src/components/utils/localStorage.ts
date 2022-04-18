@@ -8,7 +8,9 @@ export const getNew = () => {
 }
 
 export const setAns = (ans: [string, string, number][][]) => {
-    localStorage.setItem("cordle-ans", JSON.stringify(ans))
+    if (ans.length > 0) {
+        localStorage.setItem("cordle-ans", JSON.stringify(ans))
+    }
 }
 
 export const getAns = (): [string, string, number][][] => {
@@ -26,7 +28,9 @@ export const getIDX = (): number => {
 }
 
 export const setCurr = (current: [string, string, number][]) => {
-    localStorage.setItem("cordle-current", JSON.stringify(current))
+    if (current.length > 0) {
+        localStorage.setItem("cordle-current", JSON.stringify(current))
+    }
 }
 
 export const getCurr = (): [string, string, number][] => {
@@ -57,4 +61,34 @@ export const getKeep = (): [Set<string>, Set<string>, Set<string>] => {
 
 export const setKeep = (except: Set<string>, included: Set<string>, right: Set<string>) => {
     localStorage.setItem("cordle-keep", JSON.stringify([[...except], [...included], [...right]]))
+}
+
+export const setGotTime = () => {
+    localStorage.setItem("cordle-got-time", JSON.stringify(new Date().getTime()))
+}
+
+export const preDetectClear = () => {
+    const gotTime = localStorage.getItem("cordle-got-time")
+    if (gotTime === null) {
+        return
+    }
+
+    const time = JSON.parse(gotTime)
+
+    const today = new Date()
+    const today_begin = new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime()
+    const today_end = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1).getTime()
+
+    if (time > today_begin && time < today_end) {
+        return
+    }
+
+    clearLocal()
+}
+
+/**
+ * 清理本地数据
+ */
+export const clearLocal = () => {
+    localStorage.clear()
 }
