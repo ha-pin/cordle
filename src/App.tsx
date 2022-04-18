@@ -21,13 +21,13 @@ const App = () => {
 
     useEffect(() => {
         // 根据答案生成初始化的值
-        setCurrent(Array(ans.length).fill(["", "" ,-1]))
+        setCurrent(Array(ans.length).fill(["", "", -1]))
     }, [])
 
     const backspace = () => {
         if (idx > 0) {
             let tmp = [...current]
-            tmp.splice(idx - 1, 1, ["", "" ,-1])
+            tmp.splice(idx - 1, 1, ["", "", -1])
             setIdx(idx - 1)
             setCurrent(tmp)
         }
@@ -90,8 +90,8 @@ const App = () => {
         <div className="App">
             <Introduce type={type} setType={setType} />
             <div className={!got ? "pb-[400px] pt-3" : "p-3"}>
-                {answers.length > 0 && answers.map(item => <CharBox chars={item} />)}
-                {!got && current.length !== 0 && <CharBox chars={current} />}
+                {answers.length > 0 && answers.map(item => <CharBox chars={item} type={type} />)}
+                {!got && current.length !== 0 && <CharBox chars={current} type={type} />}
             </div>
             {
                 got && <div>

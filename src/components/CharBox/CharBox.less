@@ -1,6 +1,10 @@
 .cordle-cb {
     @apply select-none w-md <md:(w-full) flex flex-row justify-center items-center px-5;
 
+    &-reverse {
+        @apply !flex-row-reverse;
+    }
+
     & > li {
         @apply shadow shadow-gray-400;
         @apply w-13 h-13 m-1 rounded flex justify-center items-center;
