@@ -11,8 +11,8 @@ const App = () => {
     const [right, setRight] = useState<Set<string>>(new Set())
     const [except, setExcept] = useState<Set<string>>(new Set())
 
-    const [answers, setAnswers] = useState<Array<Array<[string, number]>>>([])
-    const [current, setCurrent] = useState<Array<[string, number]>>([])
+    const [answers, setAnswers] = useState<Array<Array<[string, string, number]>>>([])
+    const [current, setCurrent] = useState<Array<[string, string, number]>>([])
     const [idx, setIdx] = useState<number>(0)
     const [attempt, setAttempt] = useState<number>(0)
     const [got, setGot] = useState<boolean>(false)
@@ -21,13 +21,13 @@ const App = () => {
 
     useEffect(() => {
         // 根据答案生成初始化的值
-        setCurrent(Array(ans.length).fill(["", -1]))
+        setCurrent(Array(ans.length).fill(["", "" ,-1]))
     }, [])
 
     const backspace = () => {
         if (idx > 0) {
             let tmp = [...current]
-            tmp.splice(idx - 1, 1, ["", -1])
+            tmp.splice(idx - 1, 1, ["", "" ,-1])
             setIdx(idx - 1)
             setCurrent(tmp)
         }
@@ -37,10 +37,10 @@ const App = () => {
      * 追加元素
      * @param c
      */
-    const add = (c: string) => {
+    const add = (k: string, c: string) => {
         if (idx < ans.length) {
             let tmp = [...current]
-            tmp.splice(idx, 1, [c, -1])
+            tmp.splice(idx, 1, [k, c, -1])
             setIdx(idx + 1)
             setCurrent(tmp)
         }
@@ -51,26 +51,26 @@ const App = () => {
         let i: string[] = []
         let e: string[] = []
 
-        const back = [...current].map((c, idx) => {
-            if (c[0] === ans.charAt(idx)) {
-                r.push(c[0])
-                return [c[0], 1]
+        const back = [...current].map(([k, c], idx) => {
+            if (k === ans.charAt(idx)) {
+                r.push(k)
+                return [k, c, 1]
             }
 
-            if (Array.from(ans).includes(c[0])) {
-                i.push(c[0])
-                return [c[0], 2]
+            if (Array.from(ans).includes(k)) {
+                i.push(k)
+                return [k, c, 2]
             }
 
-            e.push(c[0])
-            return [c[0], 0]
-        }) as [string, number][]
+            e.push(k)
+            return [k, c, 0]
+        }) as [string, string, number][]
 
         setRight(new Set([...right, ...r]))
         setIncluded(new Set([...included, ...i]))
         setExcept(new Set([...except, ...e]))
 
-        if (back.every((c) => c[1] === 1)) {
+        if (back.every((c) => c[2] === 1)) {
             setGot(true)
         }
 
@@ -81,7 +81,7 @@ const App = () => {
     const submit = () => {
         if (idx === ans.length && current.every(x => x[0] !== "")) {
             setAnswers([...answers, check()])
-            setCurrent(Array(ans.length).fill(["", -1]))
+            setCurrent(Array(ans.length).fill(["", "", -1]))
             setIdx(0)
         }
     }

@@ -46,7 +46,7 @@ interface IKeyboardProps {
     right: Set<string>
     included: Set<string>
     except: Set<string>
-    add: (key: string) => void
+    add: (key: string, char: string) => void
     backspace: () => void
     submit: () => void
     hidden: boolean
@@ -58,9 +58,9 @@ const Keyboard: FC<IKeyboardProps> = ({ type, right, included, except, add, back
             style={hidden ? { display: "none" } : {}}>
             <ul className="cordle-kb-ul">
                 {
-                    Object.keys(kb).map((key) => [key, kb[key][type]]).map(key =>
-                        <li key={key[0]} className={except.has(key[0]) ? "cordle-kb-except" : right.has(key[0]) ? "cordle-kb-right" : included.has(key[0]) ? "cordle-kb-included" : right.has(key[0]) ? "cordle-kb-right" : "cordle-kb-normal"}>
-                            <button type="button" disabled={except.has(key[0])} onClick={() => add(key[0])}>{key[1]}</button>
+                    Object.keys(kb).map((key) => [key, kb[key][type]]).map(([k, c]) =>
+                        <li key={k} className={except.has(k) ? "cordle-kb-except" : right.has(k) ? "cordle-kb-right" : included.has(k) ? "cordle-kb-included" : right.has(k) ? "cordle-kb-right" : "cordle-kb-normal"}>
+                            <button type="button" disabled={except.has(k)} onClick={() => add(k, c)}>{c}</button>
                         </li>)
                 }
                 <li className="cordle-kb-backspace">
