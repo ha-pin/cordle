@@ -1,13 +1,14 @@
 import { FC, useEffect, useState } from "react"
 import CharBox from "../CharBox/CharBox"
+import Icon from "../Icon/Icon"
 import { getNew, setNew } from "../utils/localStorage"
 import "./Introduce.less"
 
-const example1 = [["j", ["j", "ج", ""], 1], ["a", ["a", "ا", ""], 1], ["q", ["q", "ق", ""], 1], ["e", ["e", "ى", ""], 2], ["s", ["s", "س", ""], 2]] as [string, [string, string, string], number][]
+const example1 = [["j", ["j", "ج", "ж"], 1], ["a", ["a", "ا", "а"], 1], ["q", ["q", "ق", "қ"], 1], ["e", ["e", "ى", "ы"], 2], ["s", ["s", "س", "с"], 2]] as [string, [string, string, string], number][]
 
-const example2 = [["j", ["j", "ج", ""], 1], ["a", ["a", "ا", ""], 1], ["h", ["h", "ح", ""], 0], ["s", ["s", "س", ""], 1], ["e", ["e", "ى", ""], 1]] as [string, [string, string, string], number][]
+const example2 = [["j", ["j", "ج", "ж"], 1], ["a", ["a", "ا", "а"], 1], ["h", ["h", "ح", "х"], 0], ["s", ["s", "س", "с"], 1], ["e", ["e", "ى", "ы"], 1]] as [string, [string, string, string], number][]
 
-const example3 = [["j", ["j", "ج", ""], 1], ["a", ["a", "ا", ""], 1], ["q", ["q", "ق", ""], 1], ["s", ["s", "س", ""], 1], ["e", ["e", "ى", ""], 1]] as [string, [string, string, string], number][]
+const example3 = [["j", ["j", "ج", "ж"], 1], ["a", ["a", "ا", "а"], 1], ["q", ["q", "ق", "қ"], 1], ["s", ["s", "س", "с"], 1], ["e", ["e", "ى", "ы"], 1]] as [string, [string, string, string], number][]
 
 interface IIntroduceProps {
     type: 0 | 1 | 2
@@ -30,7 +31,9 @@ const Introduce: FC<IIntroduceProps> = ({ type, setType }) => {
     }
 
     return <div id="cordle-intro" className="cordle-intro">
-        <div onClick={() => closeIntro()} className="absolute right-5 top-5">X</div>
+        <button title="close" onClick={() => closeIntro()} className="absolute right-5 top-5">
+            <Icon icon="charm:cross" />
+        </button>
         <div className="flex flex-col justify-center items-center">
             <p className="cordle-intro-title">哈兜</p>
             <p className="cordle-intro-text">哈萨克语版 Wordle</p>
@@ -66,8 +69,7 @@ const Introduce: FC<IIntroduceProps> = ({ type, setType }) => {
         <div className="flex flex-row shadow shadow-gray-300">
             <button onClick={() => setType(0)} className={`rounded-lg px-2 py-1 ${type === 0 ? "bg-[#1d9c9c] text-white" : "bg-white"}`}>哈拼</button>
             <button onClick={() => setType(1)} className={`rounded-lg px-2 py-1 ${type === 1 ? "bg-[#1d9c9c] text-white" : "bg-white"}`}>老文字</button>
-            {/* TODO 支持西里尔字母 */}
-            {/* <button onClick={() => setType(2)} className={`rounded-lg px-2 py-1 ${type === 2 ? "bg-[#1d9c9c] text-white" : "bg-white"}`}>西里尔字母</button> */}
+            <button onClick={() => setType(2)} className={`rounded-lg px-2 py-1 ${type === 2 ? "bg-[#1d9c9c] text-white" : "bg-white"}`}>西里尔字母</button>
         </div>
 
         {/* 配置项菜单 */}

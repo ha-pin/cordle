@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import './App.less'
 
 import CharBox from './components/CharBox/CharBox'
+import Icon from './components/Icon/Icon'
 import Introduce from './components/Introduce/Introduce'
 import Keyboard from './components/keyboard/Keyboard'
 import Share from './components/Share/Share'
@@ -110,6 +111,15 @@ const App = () => {
     return (
         <div className="App">
             <Introduce type={type} setType={setType} />
+            {
+                !got && <div className="flex flex-row items-center w-full px-5 py-1 shadow shadow-gray-300">
+                    <button title="show" type='button' onClick={() => {
+                        document.getElementById("cordle-intro")?.classList.remove("cordle-intro-hidden")
+                    }}>
+                        <Icon icon="charm:info" fontSize={30} />
+                    </button>
+                </div>
+            }
             <div className={!got ? "pb-[400px] pt-3" : "p-3"}>
                 {answers.length > 0 && answers.map(item => <CharBox chars={item} type={type} />)}
                 {!got && current.length !== 0 && <CharBox chars={current} type={type} />}

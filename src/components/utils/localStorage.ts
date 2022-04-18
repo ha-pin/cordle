@@ -91,4 +91,5 @@ export const preDetectClear = () => {
  */
 export const clearLocal = () => {
     localStorage.clear()
+    location.reload()
 }

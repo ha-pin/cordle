@@ -1,5 +1,4 @@
 import { FC } from "react"
-import CharBox from "../CharBox/CharBox"
 import { exportForSharing } from "../utils/export"
 
 interface IShareProps {
@@ -18,7 +17,7 @@ const Share: FC<IShareProps> = ({ ans }) => {
     return <div className="flex flex-col justify-start items-center">
         <p>恭喜你猜对了今日份的词汇！</p>
         {/* 分享 */}
-        <ul className="text-center my-9">
+        <ul className="text-center my-3">
             <li className="my-1">Cordle · 一</li>
             {
                 res.map((item, idx) => <li key={idx}>{item}</li>)
