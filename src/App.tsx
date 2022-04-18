@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import './App.less'
 import CharBox from './components/CharBox/CharBox'
+import Introduce from './components/Introduce/Introduce'
 
 import Keyboard from './components/keyboard/Keyboard'
 
@@ -87,7 +88,8 @@ const App = () => {
 
     return (
         <div className="App">
-            <div className={!got ? "mb-[400px] mt-3" : "m-3"}>
+            <Introduce type={type} setType={setType} />
+            <div className={!got ? "pb-[400px] pt-3" : "p-3"}>
                 {answers.length > 0 && answers.map(item => <CharBox chars={item} />)}
                 {!got && current.length !== 0 && <CharBox chars={current} />}
             </div>
