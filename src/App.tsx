@@ -7,12 +7,10 @@ import Introduce from './components/Introduce/Introduce'
 import Keyboard from './components/keyboard/Keyboard'
 import Share from './components/Share/Share'
 
-import { getAns, getCurr, getGOT, getIDX, getKeep, preDetectClear, setAns, setCurr, setGOT, setIDX, setKeep } from './components/utils/localStorage'
+import { getAns, getCurr, getGOT, getIDX, getKeep, getTYPE, preDetectClear, setAns, setCurr, setGOT, setGotTime, setIDX, setKeep } from './components/utils/localStorage'
 
 const App = () => {
-    preDetectClear()
-
-    const [type, setType] = useState<0 | 1 | 2>(0)
+    const [type, setType] = useState<0 | 1 | 2>(getTYPE())
     const [included, setIncluded] = useState<Set<string>>(getKeep()[2])
     const [right, setRight] = useState<Set<string>>(getKeep()[1])
     const [except, setExcept] = useState<Set<string>>(getKeep()[0])
@@ -28,6 +26,7 @@ const App = () => {
     const ans = "jaqse"
 
     useEffect(() => {
+        preDetectClear()
         // 根据答案生成初始化的值
         if (
             getCurr().length === 0
@@ -91,6 +90,7 @@ const App = () => {
         if (back.every((c) => c[2] === 1)) {
             setGot(true)
             setGOT()
+            setGotTime()
         }
 
         return back

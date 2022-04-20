@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react"
 import CharBox from "../CharBox/CharBox"
 import Icon from "../Icon/Icon"
-import { getNew, setNew } from "../utils/localStorage"
+import { getNew, setNew, setTYPE } from "../utils/localStorage"
 import "./Introduce.less"
 
 const example1 = [["j", ["j", "ج", "ж"], 1], ["a", ["a", "ا", "а"], 1], ["q", ["q", "ق", "қ"], 1], ["e", ["e", "ى", "ы"], 2], ["s", ["s", "س", "с"], 2]] as [string, [string, string, string], number][]
@@ -67,9 +67,18 @@ const Introduce: FC<IIntroduceProps> = ({ type, setType }) => {
         }} className="bg-[#1d9c9c] text-white px-4 py-2 rounded m-5">开始游戏</button>
 
         <div className="flex flex-row shadow shadow-gray-300">
-            <button onClick={() => setType(0)} className={`rounded-lg px-2 py-1 ${type === 0 ? "bg-[#1d9c9c] text-white" : "bg-white"}`}>哈拼</button>
-            <button onClick={() => setType(1)} className={`rounded-lg px-2 py-1 ${type === 1 ? "bg-[#1d9c9c] text-white" : "bg-white"}`}>老文字</button>
-            <button onClick={() => setType(2)} className={`rounded-lg px-2 py-1 ${type === 2 ? "bg-[#1d9c9c] text-white" : "bg-white"}`}>西里尔字母</button>
+            <button onClick={() => {
+                setTYPE(0)
+                setType(0)
+                }} className={`rounded-lg px-2 py-1 ${type === 0 ? "bg-[#1d9c9c] text-white" : "bg-white"}`}>哈拼</button>
+            <button onClick={() => {
+                setTYPE(1)
+                setType(1)
+                }} className={`rounded-lg px-2 py-1 ${type === 1 ? "bg-[#1d9c9c] text-white" : "bg-white"}`}>老文字</button>
+            <button onClick={() => {
+                setTYPE(2)
+                setType(2)
+                }} className={`rounded-lg px-2 py-1 ${type === 2 ? "bg-[#1d9c9c] text-white" : "bg-white"}`}>西里尔字母</button>
         </div>
 
         {/* 配置项菜单 */}

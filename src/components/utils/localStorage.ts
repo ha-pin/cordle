@@ -49,6 +49,14 @@ export const setGOT = () => {
     localStorage.setItem("cordle-got", "1")
 }
 
+export const setTYPE = (type: 0 | 1 | 2) => {
+    localStorage.setItem("cordle-type", JSON.stringify(type))
+}
+
+export const getTYPE = (): 0 | 1 | 2 => {
+    return parseInt(JSON.parse(localStorage.getItem("cordle-type") || "0")) as 0 | 1 | 2
+}
+
 export const getKeep = (): [Set<string>, Set<string>, Set<string>] => {
     const kept = localStorage.getItem("cordle-keep")
     if (kept !== null) {

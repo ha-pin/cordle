@@ -18,6 +18,7 @@ const Share: FC<IShareProps> = ({ ans }) => {
         <p>恭喜你猜对了今日份的词汇！</p>
         {/* 分享 */}
         <ul className="text-center my-3">
+            {/* 修复记日 */}
             <li className="my-1">Cordle · 一</li>
             {
                 res.map((item, idx) => <li key={idx}>{item}</li>)
